@@ -1,0 +1,55 @@
+﻿@model ScrumNotesCombiner.Models.NewUser
+@{
+    ViewBag.Title = "ActionWithUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full_w">
+    <div class="h_title">Create a new user</div>
+    @using (Html.BeginForm()) 
+    {
+        @Html.ValidationSummary()
+        <p>Allias: @Html.TextBoxFor(x=>x.Name, new { style = "width:280px"})</p>
+        <p>AD user name: @Html.TextBoxFor(x=>x.ADname, new { style = "width:237px"})</p>
+        <p>Email: @Html.TextBoxFor(x=>x.Email, new { style = "width:280px"})</p>
+        <p>Comments:</p>
+        <p>@Html.TextAreaFor(x=>x.Comments, new { style = "width:310px; height:100px"})</p>
+        <p>SCRUM Combiner administrator ?
+            @Html.DropDownListFor(x=>x.IsSCRUMadmin, new[] {
+                new SelectListItem() {Text = "Yes", Value = bool.TrueString},
+                new SelectListItem() {Text = "No", Value = bool.FalseString}
+            }, "-")
+            <input type ="submit" value ="Create new user" />
+        </p>
+    }
+</div>
+
+<div class="full_w">
+    <div class="h_title">New user projects and roles</div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Admin</th>
+                <th scope="col">Start date</th>
+                <th scope="col">Est. finish date</th>
+                <th scope="col">Role</th>
+            </tr>
+        </thead>
+						
+        <tbody>
+            <tr>
+                <td class="align-center">SCRUM Notes Combiner development</td>
+                <td>alex.aleksinskiy</td>
+                <td>17-07-2013</td>
+                <td>XX-08-2013</td>
+                <td>
+                    @Html.DropDownListFor(x=>x.ProjectRole, new[] {
+                    new SelectListItem() {Text = "Project admin", Value = bool.TrueString},
+                    new SelectListItem() {Text = "Project member", Value = bool.FalseString}
+                    }, "-")    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

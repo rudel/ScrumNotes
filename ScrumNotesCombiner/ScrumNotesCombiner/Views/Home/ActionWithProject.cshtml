@@ -1,0 +1,53 @@
+﻿@model ScrumNotesCombiner.Models.NewProject
+@{
+    ViewBag.Title = "ActionWithProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full_w">
+    <div class="h_title">Create a new project</div>
+    @using (Html.BeginForm()) 
+    {
+        @Html.ValidationSummary()
+        <p>Allias: @Html.TextBoxFor(x=>x.Title, new { style = "width:280px"})</p>
+        <p>Project administrator
+        @Html.DropDownListFor(x=>x.Admin, new[] {
+                new SelectListItem() {Text = "Aleksander Aleksinsky", Value = "1"},
+                new SelectListItem() {Text = "Michael Kuleshov", Value = "2"}
+            }, "-")
+        </p>
+        <p>Start date: @Html.TextBoxFor(x=>x.StartDate, new { style = "width:250px"})</p>
+        <p>Est.finish date: @Html.TextBoxFor(x=>x.StartDate, new { style = "width:230px"})</p>
+        <p>Comments:</p>
+        <p>@Html.TextAreaFor(x=>x.Comments, new { style = "width:310px; height:100px"})</p>
+        <input type ="submit" value ="Create new project" />
+    }
+</div>
+
+<div class="full_w">
+    <div class="h_title">New project users roles:</div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Allias</th>
+                <th scope="col">Domain name</th>
+                <th scope="col">e-mail</th>
+                <th scope="col" style="width: 65px;">Role</th>
+            </tr>
+        </thead>
+						
+        <tbody>
+            <tr>
+                <td class="align-center">Aleksander Aleksinskiy</td>
+                <td>alex.aleksinskiy</td>
+                <td>alex.aleksinskiy@akvelon.com</td>
+                <td>
+                     @Html.DropDownListFor(x=>x.ProjectMembers, new[] {
+                    new SelectListItem() {Text = "Project admin", Value = bool.TrueString},
+                    new SelectListItem() {Text = "Project member", Value = bool.FalseString}
+                    }, "-")    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

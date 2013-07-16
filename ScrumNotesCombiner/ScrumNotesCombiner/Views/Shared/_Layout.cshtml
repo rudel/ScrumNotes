@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="author" content="" />
+<title>SCRUM notes combiner</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/css/navi.css" media="screen" />
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".box .h_title").not(this).next("ul").show("normal");
+        $(".box .h_title").not(this).next("#home").show("normal");
+        $(".box").children(".h_title").click(function () { $(this).next("ul").slideToggle(); });
+    });
+</script>
+<!-- CLEditor WYSIWYG script below: -->
+<link rel="stylesheet" type="text/css" href="~/Content/jquery.cleditor.css" />
+<script type="text/javascript" src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.cleditor.min.js"></script>
+<!-- Table script below: -->
+<script type="text/javascript" src="~/Scripts/table.js"></script>
+</head>
+<body>
+<div class="wrap">
+	<div id="header">
+		<div id="top">
+			<div class="left">
+				<img align="top" src="/images/akvelon_logo.png" alt="logo" />
+                Вход выполнен: <strong>@User.Identity.Name</strong>
+			</div>
+			<div class="right">
+				<div class="align-right">
+					<p>Last visit: <strong>@System.DateTime.Now.ToString()</strong></p>
+				</div>
+			</div>
+		</div>
+		<div id="nav">
+			<ul>
+				<li class="upp"><a href="#">Combiner</a>
+					<ul>
+						<li>&#8250; @Html.ActionLink("Projects", "Index", "Home")</li>
+						<li>&#8250; @Html.ActionLink("Statuses", "Statuses", "Statuses")</li>
+						<li>&#8250; @Html.ActionLink("Users", "ShowUsers", "Users")</li>
+						<li>&#8250; @Html.ActionLink("SCRUM templates", "ScrumTemplates", "ScrumTemplates")</a></li>
+                        <li>&#8250; @Html.ActionLink("Notifications", "Notifications", "Notifications")</li>
+                        <li>&#8250; @Html.ActionLink("Settings", "Settings", "Settings")</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>	
+	<div id="content">
+		<div id="sidebar">
+			<div class="box">
+				<div class="h_title">&#8250; Combiner</div>
+				<ul id="home">
+					<li class="b1"><a class="icon view_page"  @Html.ActionLink("Projects", "Index", "Home")</a></li>
+					<li class="b2"><a class="icon report" @Html.ActionLink("Statuses", "Statuses", "Statuses")</a></li>
+					<li class="b1"><a class="icon users"@Html.ActionLink("Users", "ShowUsers", "Users")</a></li>
+					<li class="b2"><a class="icon report" @Html.ActionLink("SCRUM templates", "ScrumTemplates", "ScrumTemplates")</a></li>
+                    <li class="b1"><a class="icon contact" @Html.ActionLink("Notifications", "Notifications", "Notifications")</a></li>
+                    <li class="b2"><a class="icon config"@Html.ActionLink("Settings", "Settings", "Settings")</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main">			
+			<div class="clear"></div>
+			
+            @RenderBody()
+
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div id="footer">
+		<div class="left">
+			<p>Design: Administrator | Admin Panel: <a href="">akvelon.ru</a></p>
+		</div>
+		<div class="right">
+			<p><a href="">Example link 1</a> | <a href="">Example link 2</a></p>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

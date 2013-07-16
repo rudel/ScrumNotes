@@ -1,0 +1,25 @@
+﻿@model ScrumNotesCombiner.Models.ScrumTemplates
+@{
+    ViewBag.Title = "ActionWithScrumTemplate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full_w">
+    <div class="h_title">Create a new SCRUM template</div>
+    @using (Html.BeginForm("ActionWithScrumTemplate", "ScrumTemplates")) 
+    {
+        @Html.ValidationSummary()
+        <p>Project:  @Html.DropDownListFor(x=>x.ProjectId, new[] {
+                         new SelectListItem() {Text = "SCRUM Notes Combiner development", Value = "1"},
+                         new SelectListItem() {Text = "Public activity management system", Value = "2"}
+                     }, "-")
+        </p>
+        <p>Template Name: @Html.TextBoxFor(x=>x.TemplateName, new { style = "width:250px"})</p>
+        <p>@Html.TextAreaFor(x => x.TemplateContent)</p>
+        <input type ="submit" value ="Create new template" />
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () { $("#TemplateContent").cleditor(); });
+</script>

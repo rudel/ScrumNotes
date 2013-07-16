@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "ShowUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full_w">
+    <div class="h_title">Users list:</div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Allias</th>
+                <th scope="col">Domain name</th>
+                <th scope="col">Roles</th>
+                <th scope="col">e-mail</th>
+                <th scope="col" style="width: 65px;">Action</th>
+            </tr>
+        </thead>
+						
+        <tbody>
+            <tr>
+                <td class="align-center">Aleksander Aleksinskiy</td>
+                <td>alex.aleksinskiy</td>
+                <td>SCRUM admin, project admin(3)</td>
+                <td>alex.aleksinskiy@akvelon.com</td>
+                <td>
+                    <a href="#" class="table-icon edit" title="Edit"></a>
+                    <a href="#" class="table-icon delete" title="Delete"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="add"> @Html.ActionLink("Create new user", "ActionWithUser", "Users", new {id="new", action = "create"})</button>
+</div>

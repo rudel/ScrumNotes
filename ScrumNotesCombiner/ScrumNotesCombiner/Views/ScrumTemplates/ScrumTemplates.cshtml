@@ -1,0 +1,38 @@
+﻿@model ScrumNotesCombiner.Models.ScrumTemplates
+@{
+    ViewBag.Title = "ScrumTemplates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full_w">
+    <div class="h_title">SCRUM templates list:</div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Template</th>
+                <th scope="col" style="width: 65px;">Action</th>
+            </tr>
+        </thead>
+						
+        <tbody>
+            <tr>
+                <td class="align-center">SCRUM Notes Combiner development</td>
+                <td>Default</td>
+                <td>
+                    <a href="#" class="table-icon edit" title="Edit"></a>
+                    <a href="#" class="table-icon delete" title="Delete"></a>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-center">Public actions management system</td>
+                <td>Non-formal</td>
+                <td>
+                    <a href="#" class="table-icon edit" title="Edit"></a>
+                    <a href="#" class="table-icon delete" title="Delete"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="add">@Html.ActionLink("Create new template", "ActionWithScrumTemplate", "ScrumTemplates", new {id="new", action = "create"}, null)</button>
+</div>
