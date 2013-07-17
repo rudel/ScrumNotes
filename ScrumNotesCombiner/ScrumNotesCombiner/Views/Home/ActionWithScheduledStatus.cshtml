@@ -1,0 +1,74 @@
+﻿@model ScrumNotesCombiner.Models.NewScheduleStatus
+@{
+    ViewBag.Title = "ActionWithScheduledStatus";
+}
+
+<div class="full_w">
+    <div class="h_title">Create a new scheduled status</div>
+    @using (Html.BeginForm()) 
+    {
+        @Html.ValidationSummary()
+        <p>Allias: @Html.TextBoxFor(x=>x.Allias, new { style = "width:280px"})</p>
+        <p>Type
+            @Html.DropDownListFor(x=>x.Type, new[] {
+                new SelectListItem() {Text = "Dayly", Value = "Dayly"},
+                new SelectListItem() {Text = "Weekly", Value = "Weekly"},
+                new SelectListItem() {Text = "Monthly", Value = "Weekly"}
+            }, "-")
+        </p>
+        <p>Day of week
+            @Html.DropDownListFor(x=>x.DayOfWeek, new[] {
+                new SelectListItem() {Text = "Monday", Value = "Monday"},
+                new SelectListItem() {Text = "Tuesday", Value = "Tuesday"},
+                new SelectListItem() {Text = "Wednesday", Value = "Wednesday"},
+                new SelectListItem() {Text = "Thursday", Value = "Thursday"},
+                new SelectListItem() {Text = "Friday", Value = "Friday"},
+                new SelectListItem() {Text = "Saturday", Value = "Saturday"},
+                new SelectListItem() {Text = "Sunday", Value = "Sunday"}
+            }, "-")
+        </p>
+        <p>Day of month
+            @Html.DropDownListFor(x=>x.DayOfWeek, new[] {
+                new SelectListItem() {Text = "1", Value = "1"},
+                new SelectListItem() {Text = "2", Value = "2"},
+                new SelectListItem() {Text = "3", Value = "3"},
+                new SelectListItem() {Text = "4", Value = "4"},
+                new SelectListItem() {Text = "5", Value = "6"},
+                new SelectListItem() {Text = "7", Value = "7"},
+                new SelectListItem() {Text = "8", Value = "8"},
+                new SelectListItem() {Text = "9", Value = "9"},
+                new SelectListItem() {Text = "10", Value = "11"},
+                new SelectListItem() {Text = "11", Value = "12"},
+                new SelectListItem() {Text = "12", Value = "12"},
+                new SelectListItem() {Text = "13", Value = "13"},
+                new SelectListItem() {Text = "14", Value = "14"},
+                new SelectListItem() {Text = "15", Value = "15"},
+                new SelectListItem() {Text = "16", Value = "16"},
+                new SelectListItem() {Text = "17", Value = "17"},
+                new SelectListItem() {Text = "18", Value = "18"},
+                new SelectListItem() {Text = "19", Value = "19"},
+                new SelectListItem() {Text = "20", Value = "20"},
+                new SelectListItem() {Text = "21", Value = "21"},
+                new SelectListItem() {Text = "22", Value = "22"},
+                new SelectListItem() {Text = "23", Value = "23"},
+                new SelectListItem() {Text = "24", Value = "24"},
+                new SelectListItem() {Text = "25", Value = "25"},
+                new SelectListItem() {Text = "26", Value = "26"},
+                new SelectListItem() {Text = "27", Value = "27"},
+                new SelectListItem() {Text = "28", Value = "28"},
+                new SelectListItem() {Text = "29", Value = "29"},
+                new SelectListItem() {Text = "30", Value = "30"},
+                new SelectListItem() {Text = "31", Value = "31"}
+            }, "-")
+        </p>
+        <p>@Html.TextAreaFor(x=>x.emails, new { style = "width:310px; height:100px"})</p>
+        <p>Scheduled time: @Html.TextBoxFor(x=>x.Allias, new { style = "width:100px"})</p>
+        <input type ="submit" value ="Create new Scheduled status" />
+        <p>SCRUM template
+            @Html.DropDownListFor(x=>x.Type, new[] {
+                new SelectListItem() {Text = "SCRUM Notes Combiner development: default", Value = "SCRUM Notes Combiner development: default"},
+                new SelectListItem() {Text = "Public actions management system: non-formal", Value = "Public actions management system: non-formal"},
+            }, "-")
+        </p>
+    }
+</div>

@@ -9,9 +9,9 @@
     @using (Html.BeginForm("ActionWithScrumTemplate", "ScrumTemplates")) 
     {
         @Html.ValidationSummary()
-        <p>Project:  @Html.DropDownListFor(x=>x.ProjectId, new[] {
-                         new SelectListItem() {Text = "SCRUM Notes Combiner development", Value = "1"},
-                         new SelectListItem() {Text = "Public activity management system", Value = "2"}
+        <p>Scheduling Status:  @Html.DropDownListFor(x=>x.ProjectId, new[] {
+                         new SelectListItem() {Text = "SCRUM Notes Combiner development: default", Value = "1"},
+                         new SelectListItem() {Text = "Public activity management system: non-formal", Value = "2"}
                      }, "-")
         </p>
         <p>Template Name: @Html.TextBoxFor(x=>x.TemplateName, new { style = "width:250px"})</p>

@@ -6,19 +6,15 @@ using System.Web.Mvc;
 
 namespace ScrumNotesCombiner.Controllers
 {
-    public class StatusesController : Controller
+    public class SettingsController : Controller
     {
         //
-        // GET: /Statuses/
+        // GET: /Settings/
 
-        public ActionResult Statuses()
+        public ActionResult Settings()
         {
             return View();
         }
 
-        public ActionResult ActionWithStatus()
-        {
-            return View();
-        }
     }
 }

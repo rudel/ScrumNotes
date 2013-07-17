@@ -1,0 +1,17 @@
+﻿@model ScrumNotesCombiner.Models.Settings
+@{
+    ViewBag.Title = "Settings";
+}
+
+<div class="full_w">
+    <div class="h_title">Create a new user status</div>
+    @using (Html.BeginForm()) 
+    {
+        <p>Database server name @Html.TextBoxFor(x=>x.ServerName, new { style = "width:280px"})</p>
+        <p>Database name @Html.TextBoxFor(x=>x.DatabaseName, new { style = "width:280px"})</p>
+        <p>@Html.CheckBoxFor(x => x.CreateNewDatabase) Create new database</p>
+        <p>SCRUM Administrator user name @Html.TextBoxFor(x=>x.DatabaseName, new { style = "width:280px"})</p>
+        <p>SCRUM Administrator password @Html.TextBoxFor(x=>x.DatabaseName, new { style = "width:280px"})</p>
+        <p><input type ="submit" value ="Save settings" /></p>
+    }
+</div>

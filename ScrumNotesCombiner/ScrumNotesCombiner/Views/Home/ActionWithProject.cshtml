@@ -11,7 +11,7 @@
         @Html.ValidationSummary()
         <p>Allias: @Html.TextBoxFor(x=>x.Title, new { style = "width:280px"})</p>
         <p>Project administrator
-        @Html.DropDownListFor(x=>x.Admin, new[] {
+            @Html.DropDownListFor(x=>x.Admin, new[] {
                 new SelectListItem() {Text = "Aleksander Aleksinsky", Value = "1"},
                 new SelectListItem() {Text = "Michael Kuleshov", Value = "2"}
             }, "-")
@@ -22,6 +22,37 @@
         <p>@Html.TextAreaFor(x=>x.Comments, new { style = "width:310px; height:100px"})</p>
         <input type ="submit" value ="Create new project" />
     }
+</div>
+
+<div class="full_w">
+    <div class="h_title">Project scheduling statuses statuses:</div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Allias</th>
+                <th scope="col">Type</th>
+                <th scope="col">Day of week</th>
+                <th scope="col">Day of month</th>
+                <th scope="col">Scheduled time</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+						
+        <tbody>
+            <tr>
+                <td>Default</td>
+                <td>dayly</td>
+                <td>-</td>
+                <td>-</td>
+                <td>23:00</td>
+                <td>
+                    <a href="#" class="table-icon edit" title="Edit"></a>
+                    <a href="#" class="table-icon delete" title="Delete"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="add">@Html.ActionLink("Create new scheduling status", "ActionWithScheduledStatus", "Home", new {id="new", action = "create"}, null)</button>
 </div>
 
 <div class="full_w">

@@ -28,5 +28,20 @@ namespace ScrumNotesCombiner.Controllers
             }
             return View();
         }
+        public ActionResult ActionWithScheduledStatus(string id, string action)
+        {
+            switch (action)
+            {
+                case "create":
+                    break;
+                case "view":
+                    break;
+                case "edit":
+                    break;
+                case "remove":
+                    break;
+            }
+            return View();    
+        }
     }
 }

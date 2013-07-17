@@ -126,14 +126,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ScrumTemplatesController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\StatusesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\NewProject.cs" />
+    <Compile Include="Models\NewScheduleStatus.cs" />
+    <Compile Include="Models\NewStatus.cs" />
     <Compile Include="Models\NewUser.cs" />
     <Compile Include="Models\ScrumTemplates.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +256,9 @@
     <Content Include="Views\ScrumTemplates\ScrumTemplates.cshtml" />
     <Content Include="Views\ScrumTemplates\ActionWithScrumTemplate.cshtml" />
     <Content Include="Views\Statuses\Statuses.cshtml" />
+    <Content Include="Views\Home\ActionWithScheduledStatus.cshtml" />
+    <Content Include="Views\Statuses\ActionWithStatus.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,32 @@
+﻿@model ScrumNotesCombiner.Models.NewStatus
+@{
+    ViewBag.Title = "ActionWithStatus";
+}
+
+<div class="full_w">
+    <div class="h_title">Create a new user status</div>
+    @using (Html.BeginForm()) 
+    {
+        @Html.ValidationSummary()
+        <p>Type
+            @Html.DropDownListFor(x=>x.StatusCommonType, new[] {
+                new SelectListItem() {Text = "Dayly: today - tomorrow", Value = "1"},
+                new SelectListItem() {Text = "Dayly: today - yesterday", Value = "2"},
+                new SelectListItem() {Text = "Weekly: this week - next week", Value = "2"},
+                new SelectListItem() {Text = "Weekly: this week - last week", Value = "2"},
+                new SelectListItem() {Text = "Monthly: this month - next month", Value = "3"},
+                new SelectListItem() {Text = "Monthly: this month - previous month", Value = "3"}
+            }, "-")
+        </p>
+        <p>Period1:</p>
+        <p>@Html.TextAreaFor(x=>x.FirstArg, new { style = "width:310px; height:50px"})</p>
+        <p>Period2:</p>
+        <p>@Html.TextAreaFor(x=>x.SecondArg, new { style = "width:310px; height:50px"})</p>
+        <p>Blockers:</p>
+        <p>@Html.TextAreaFor(x=>x.Blocker, new { style = "width:310px; height:50px"})</p>
+        <p>Detailed TD:</p>
+        <p>@Html.TextAreaFor(x=>x.Blocker, new { style = "width:310px; height:50px"})</p>
+        
+        <p><input type ="submit" value ="Create user status" /></p>
+    }
+</div>

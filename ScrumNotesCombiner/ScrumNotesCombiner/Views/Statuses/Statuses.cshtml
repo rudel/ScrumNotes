@@ -12,31 +12,33 @@
             <th class="table-sortable:default">Project</th>
             <th class="table-sortable:default">User Name</th>
             <th class="table-sortable:default">AD Username</th>
-            <th class="table-sortable:default">Date & Time</th>
+            <th class="table-sortable:default">Time</th>
+            <th class="table-sortable:default">Actions</th>
         </tr>
         <tr>
             <th>
-                <select onchange="Table.filter(this,this)">
+                <select onchange="Table.filter(this,this)" style="width: 120px;">
                     <option value="">-</option>
                     <option value="SCRUM Notes Combiner development">SCRUM Notes Combiner development</option>
                     <option value="Preparations for something">Preparations for something</option>
                 </select>
             </th>
             <th>
-                <select onchange="Table.filter(this,this)">
+                <select onchange="Table.filter(this,this)" style="width: 120px;>
                     <option value="">-</option>
                     <option value="Aleksander Aleksinsky">Aleksander Aleksinsky</option>
                     <option value="Vasily Pupkin">Vasily Pupkin</option>
                 </select>
             </th>
             <th>
-                <select onchange="Table.filter(this,this)">
+                <select onchange="Table.filter(this,this)" style="width: 120px;>
                     <option value="">-</option>
                     <option value="alex.aleksinsky">alex.aleksinskiy</option>
                     <option value="vasily.pupkin">vasily.pupkin</option>
                 </select>
             </th>
-            <th><input name="filter" onkeyup="Table.filter(this,this)"></th>
+            <th><input name="filter" onkeyup="Table.filter(this,this) " size="5"></th>
+            <th></th>
 	    </tr>
     </thead>
     <tbody>
@@ -45,19 +47,32 @@
             <td>Aleksander Aleksinsky</td>
             <td>alex.aleksinsky</td>
             <td>16.07.2013 16:30</td>
+            <td>
+                <a href="#" class="table-icon edit" title="Edit"></a>
+                <a href="#" class="table-icon delete" title="Delete"></a>
+            </td>
         </tr>
         <tr>
             <td>Preparations for something</td>
             <td>Vasily Pupkin</td>
             <td>vasily.pupkin</td>
             <td>10.07.2013 16:40</td>
+            <td>
+                <a href="#" class="table-icon edit" title="Edit"></a>
+                <a href="#" class="table-icon delete" title="Delete"></a>
+            </td>
         </tr>
         <tr>
             <td>SCRUM Notes Combiner development</td>
             <td>Vasily Pupkin</td>
             <td>vasily.pupkin</td>
             <td>10.07.2013 17:50</td>
+            <td>
+                <a href="#" class="table-icon edit" title="Edit"></a>
+                <a href="#" class="table-icon delete" title="Delete"></a>
+            </td>
         </tr>
     </tbody>
 </table>
+    <button type="submit" class="add">@Html.ActionLink("Create new Status", "ActionWithStatus", "Statuses")</button>
 </div>
