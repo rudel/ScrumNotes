@@ -1,47 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HomeController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The home controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace ScrumNotesCombiner.Controllers
 {
-    public class HomeController : Controller //Homepage
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
+    using ScrumNotesCombiner.Models;
+
+    /// <summary>
+    ///     The home controller.
+    /// </summary>
+    public class HomeController : Controller
     {
-        public ActionResult Index() //List of projects here
+        // Homepage
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The action with project.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="ProjectAction">
+        /// The Project Action.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpGet]
+        public ActionResult ActionWithProject(int id, string ProjectAction)
         {
-            return View();
+            var ScrumNotesDatabase = new Database();
+            List<user> userlist = ScrumNotesDatabase.GetUsers();
+            SchedulingStatusList ssl = ScrumNotesDatabase.GetSchedulingStatuses(id);
+            UsersListForProject ulfp = ScrumNotesDatabase.GetUsersForProjectRoles(id);
+            var nproject = new NewProject(false, userlist, ProjectAction, ssl, ulfp);
+            switch (ProjectAction)
+            {
+                case "Create":
+                    nproject.AllowEdit = true;
+                    nproject.ProjectAction = ProjectAction;
+                    return View(nproject);
+                    break;
+                case "View":
+                    nproject.AllowEdit = false;
+                    return View(nproject);
+                    break;
+                case "Edit":
+                    nproject.AllowEdit = true;
+                    return View(nproject);
+                    break;
+                case "Delete":
+                    ScrumNotesDatabase.DeleteProject(id);
+                    return RedirectToAction("Index");
+                    break;
+            }
+            return this.View();
         }
 
-        public ActionResult ActionWithProject(string id, string action) //Performes actions with project
+        /// <summary>
+        /// The action with project.
+        /// </summary>
+        /// <param name="newproject">
+        /// The newproject.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        [HttpPost]
+        public ActionResult ActionWithProject(NewProject newproject)
         {
-            switch (action)
+            var ScrumNotesDatabase = new Database();
+            switch (newproject.ProjectAction)
             {
-                case "create":
+                case "Create":
+                    ScrumNotesDatabase.CreateProject(newproject);
+                    this.RedirectToAction("Index");
+                    return this.View(newproject);
                     break;
-                case "view":
-                    break;
-                case "edit":
-                    break;
-                case "remove":
-                    break;
+                case "Edit":
+                    return this.View(newproject);
             }
-            return View();
+            return RedirectToAction("Index");
         }
-        public ActionResult ActionWithScheduledStatus(string id, string action)
-        {
-            switch (action)
+
+        // <summary>
+                /// The action with scheduled status.
+                /// </summary>
+                /// <param name="id">
+                /// The id.
+                /// </param>
+                /// <param name="action">
+                /// The action.
+                /// </param>
+                /// <returns>
+                /// The <see cref="ActionResult"/>.
+                /// </returns>
+            public
+            ActionResult ActionWithScheduledStatus 
+            (string id, string action)
             {
-                case "create":
-                    break;
-                case "view":
-                    break;
-                case "edit":
-                    break;
-                case "remove":
-                    break;
+                return this.View();
             }
-            return View();    
+
+            // <summary>
+            ///     The index.
+            /// </summary>
+            /// <returns>
+            ///     The <see cref="ActionResult" />.
+            /// </returns>
+        public
+            ActionResult Index 
+            ()
+            {
+                var ScrumNotesDatabase = new Database();
+                ProjectsList projects = ScrumNotesDatabase.GetProjectsList();
+                return this.View(projects);
+            }
+
+            #endregion
         }
+
+
     }
-}

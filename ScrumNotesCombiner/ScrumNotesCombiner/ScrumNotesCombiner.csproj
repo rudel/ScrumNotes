@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -120,6 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\Helpers\HtmlHelpers.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -132,12 +134,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\DataClasses1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\NewProject.cs" />
     <Compile Include="Models\NewScheduleStatus.cs" />
     <Compile Include="Models\NewStatus.cs" />
     <Compile Include="Models\NewUser.cs" />
+    <Compile Include="Models\ProjectsList.cs" />
+    <Compile Include="Models\SchedulingStatusList.cs" />
     <Compile Include="Models\ScrumTemplates.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\UsersListForProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +210,34 @@
     <Content Include="Content\watable.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="img\bg_arr_left.png" />
+    <Content Include="img\bg_arr_nav.png" />
+    <Content Include="img\bg_box_head.jpg" />
+    <Content Include="img\bg_login_top.jpg" />
+    <Content Include="img\bg_top.jpg" />
+    <Content Include="img\i_add.png" />
+    <Content Include="img\i_add_page.png" />
+    <Content Include="img\i_add_user.png" />
+    <Content Include="img\i_archive.png" />
+    <Content Include="img\i_block_users.png" />
+    <Content Include="img\i_category.png" />
+    <Content Include="img\i_config.png" />
+    <Content Include="img\i_contact.png" />
+    <Content Include="img\i_delete.png" />
+    <Content Include="img\i_edit.png" />
+    <Content Include="img\i_error.png" />
+    <Content Include="img\i_ok.png" />
+    <Content Include="img\i_page.png" />
+    <Content Include="img\i_photo.png" />
+    <Content Include="img\i_report.png" />
+    <Content Include="img\i_users.png" />
+    <Content Include="img\i_view_page.png" />
+    <Content Include="img\i_warning.png" />
+    <Content Include="Models\DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -207,6 +246,8 @@
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Content\jquery.cleditor.css" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.css" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\jquery.cleditor.js" />
     <Content Include="Scripts\jquery.cleditor.min.js" />
     <Content Include="Scripts\jquery.js" />
@@ -262,6 +303,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\DataClasses1.dbml.layout">
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

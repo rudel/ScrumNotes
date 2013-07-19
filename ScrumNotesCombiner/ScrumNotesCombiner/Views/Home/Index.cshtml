@@ -1,4 +1,6 @@
-﻿@{
+﻿@using ScrumNotesCombiner.App_Code.Helpers
+@model ScrumNotesCombiner.Models.ProjectsList
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,18 +19,22 @@
         </thead>
 						
         <tbody>
-            <tr>
-                <td class="align-center">SCRUM Notes Combiner development</td>
-                <td>alex.aleksinskiy</td>
-                <td>17-07-2013</td>
-                <td>XX-08-2013</td>
-                <td>
-                    <a href="#" class="table-icon edit" title="Edit"></a>
-                    <a href="#" class="table-icon delete" title="Delete"></a>
-                </td>
-            </tr>
+            @foreach (var project in Model.ProjectDatabaseList)
+            {
+                @:<tr>
+                    @:<td>@Html.ActionLink(project.Allias, "ActionWithProject", "Home", new {id = project.Id, ProjectAction = "View"}, null)</td>
+                    @:<td>@project.Admin</td>
+                    @:<td>@project.StartDate</td>
+                    @:<td>@project.EstFinishDate</td>
+                    @:<td>
+                        @Html.ActionImage("ActionWithProject", "Home", new { id = project.Id, ProjectAction = "Edit" }, "~/img/i_edit.png", "Edit", false)
+                        @:&nbsp;
+                        @Html.ActionImage("ActionWithProject", "Home", new { id = project.Id, ProjectAction = "Delete" }, "~/img/i_delete.png", "Delete",true)
+                    @:</td>
+                @:</tr>
+            }
         </tbody>
     </table>
-    <button type="submit" class="add">@Html.ActionLink("Create new Project", "ActionWithProject", "Home", new {id="new", action = "create"}, null)</button>
+    <button type="submit" class="add">@Html.ActionLink("Create new Project", "ActionWithProject", "Home", new {id=0, ProjectAction = "Create"}, null)</button>
 </div>
 

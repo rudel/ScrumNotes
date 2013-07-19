@@ -9,18 +9,34 @@
     @using (Html.BeginForm()) 
     {
         @Html.ValidationSummary()
-        <p>Allias: @Html.TextBoxFor(x=>x.Title, new { style = "width:280px"})</p>
-        <p>Project administrator
-            @Html.DropDownListFor(x=>x.Admin, new[] {
-                new SelectListItem() {Text = "Aleksander Aleksinsky", Value = "1"},
-                new SelectListItem() {Text = "Michael Kuleshov", Value = "2"}
-            }, "-")
-        </p>
-        <p>Start date: @Html.TextBoxFor(x=>x.StartDate, new { style = "width:250px"})</p>
-        <p>Est.finish date: @Html.TextBoxFor(x=>x.StartDate, new { style = "width:230px"})</p>
-        <p>Comments:</p>
-        <p>@Html.TextAreaFor(x=>x.Comments, new { style = "width:310px; height:100px"})</p>
-        <input type ="submit" value ="Create new project" />
+        if (Model.AllowEdit==true)
+         {
+             <p>Allias: 
+                 @Html.TextBoxFor(x => x.Title, new { style = "width:280px" })
+             </p>
+             <p>Project administrator
+                 @Html.DropDownListFor(m => m.Admin, new SelectList(Model.ListForProjectAdmin, "id", "Allias", Model.ListForProjectAdmin.First().id))
+             </p>
+             <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px" })</p>
+             <p>Est.finish date: @Html.TextBoxFor(x => x.EstFinishDate, new { style = "width:230px" })</p>
+             <p>Comments:</p>
+             <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px" })</p>
+             <input type ="submit" value ="Create new project" />
+         }
+         else
+         {
+              <p>Allias: 
+                 @Html.TextBoxFor(x => x.Title, new { style = "width:280px", @readonly = "readonly" })
+             </p>
+             <p>Project administrator
+                 @Html.TextBoxFor(x => x.Admin, new{@readonly = "readonly"})
+             </p>
+             <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px", @readonly = "readonly" })</p>
+             <p>Est.finish date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:230px", @readonly = "readonly" })</p>
+             <p>Comments:</p>
+             <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px", @readonly = "readonly" })</p>
+             <input type ="submit" value ="Create new project" />    
+         }
     }
 </div>
 
@@ -39,20 +55,28 @@
         </thead>
 						
         <tbody>
-            <tr>
-                <td>Default</td>
-                <td>dayly</td>
-                <td>-</td>
-                <td>-</td>
-                <td>23:00</td>
-                <td>
-                    <a href="#" class="table-icon edit" title="Edit"></a>
-                    <a href="#" class="table-icon delete" title="Delete"></a>
-                </td>
-            </tr>
+            
+                @foreach (var schedulingstatus in Model.SchedulingStatusList.SchedulingStatusDbList)
+                {
+                    @:<tr>
+                        @:<td>@schedulingstatus.Allias</td>
+                        @:<td>@schedulingstatus.Type</td>
+                        @:<td>@schedulingstatus.DayOfWeek</td>
+                        @:<td>@schedulingstatus.DayOfMonth</td>
+                        @:<td>@schedulingstatus.ScheduledTime</td>
+                        @:<td>
+                    if (Model.AllowEdit == true)
+                    {
+                        @:<a href="#" class="table-icon edit" title="Edit"></a>
+                        @:<a href="#" class="table-icon delete" title="Delete"></a>
+                    }
+                    @:</td>
+                    @:</tr>
+                }
+           
         </tbody>
     </table>
-    <button type="submit" class="add">@Html.ActionLink("Create new scheduling status", "ActionWithScheduledStatus", "Home", new {id="new", action = "create"}, null)</button>
+    @if (Model.AllowEdit){<button type="submit" class="add">@Html.ActionLink("Create new scheduling status", "ActionWithScheduledStatus", "Home", new {id="new", action = "create"}, null)</button>}
 </div>
 
 <div class="full_w">
@@ -68,17 +92,74 @@
         </thead>
 						
         <tbody>
-            <tr>
-                <td class="align-center">Aleksander Aleksinskiy</td>
-                <td>alex.aleksinskiy</td>
-                <td>alex.aleksinskiy@akvelon.com</td>
-                <td>
-                     @Html.DropDownListFor(x=>x.ProjectMembers, new[] {
-                    new SelectListItem() {Text = "Project admin", Value = bool.TrueString},
-                    new SelectListItem() {Text = "Project member", Value = bool.FalseString}
-                    }, "-")    
-                </td>
-            </tr>
+            @foreach (var userslist in Model.UsersListForProject.UsersDbListForProject)
+            {
+                <tr>
+                    <td class="align-center">@userslist.Allias</td>
+                    <td>@userslist.ADusername</td>
+                    <td>@userslist.Email</td>
+                    <td>
+                        @if (Model.AllowEdit == true)
+                        {
+                            @Html.DropDownListFor(x => x.ProjectMembers, new[] { new SelectListItem() { Text = "Project admin", Value = bool.TrueString }, new SelectListItem() { Text = "Project member", Value = bool.FalseString } }, "-")
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.ProjectMembers);
+                        }
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.datepicker.regional['ru'] = {
+            closeText: 'Закрыть',
+            prevText: '<Пред',
+            nextText: 'След>',
+            currentText: 'Сегодня',
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда',
+                'четверг', 'пятница', 'суббота'],
+            dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+            dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            weekHeader: 'Не',
+            dateFormat: 'dd.mm.yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['ru']);
+
+        $.timepicker.regional['ru'] = {
+            timeOnlyTitle: 'Выберите время',
+            timeText: 'Время',
+            hourText: 'Часы',
+            minuteText: 'Минуты',
+            secondText: 'Секунды',
+            millisecText: 'миллисекунды',
+            currentText: 'Текущая',
+            closeText: 'Закрыть',
+            ampm: false
+        };
+        $.timepicker.setDefaults($.timepicker.regional['ru']);
+        $("form").validate({
+            errorLabelContainer: "#errdv",
+            rules: { Id: { required: true, maxlength: 3 }, NewPrice: { required: true} },
+            messages: { Id: { required: "Поле обязательно для заполнения.",
+                maxlength: "Длина не более 3 символов."} }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $("input[name='StartDate']").datetimepicker();
+    $("input[name='EstFinishDate']").datetimepicker();
+</script>
