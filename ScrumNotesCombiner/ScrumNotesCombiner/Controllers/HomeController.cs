@@ -49,10 +49,14 @@ namespace ScrumNotesCombiner.Controllers
                     return View(nproject);
                     break;
                 case "View":
+                    nproject = ScrumNotesDatabase.GetProjectInfo(id);
+                    nproject.SetExtraParams(false, userlist, ProjectAction, ssl, ulfp);
                     nproject.AllowEdit = false;
                     return View(nproject);
                     break;
                 case "Edit":
+                    nproject = ScrumNotesDatabase.GetProjectInfo(id);
+                    nproject.SetExtraParams(false, userlist, ProjectAction, ssl, ulfp);
                     nproject.AllowEdit = true;
                     return View(nproject);
                     break;

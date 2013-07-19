@@ -1,4 +1,5 @@
-﻿@model ScrumNotesCombiner.Models.NewProject
+﻿@using ScrumNotesCombiner.Models
+@model NewProject
 @{
     ViewBag.Title = "ActionWithProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,37 +7,37 @@
 
 <div class="full_w">
     <div class="h_title">Create a new project</div>
-    @using (Html.BeginForm()) 
+    @using (Html.BeginForm())
     {
         @Html.ValidationSummary()
-        if (Model.AllowEdit==true)
-         {
-             <p>Allias: 
-                 @Html.TextBoxFor(x => x.Title, new { style = "width:280px" })
-             </p>
-             <p>Project administrator
-                 @Html.DropDownListFor(m => m.Admin, new SelectList(Model.ListForProjectAdmin, "id", "Allias", Model.ListForProjectAdmin.First().id))
-             </p>
-             <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px" })</p>
-             <p>Est.finish date: @Html.TextBoxFor(x => x.EstFinishDate, new { style = "width:230px" })</p>
-             <p>Comments:</p>
-             <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px" })</p>
-             <input type ="submit" value ="Create new project" />
-         }
-         else
-         {
-              <p>Allias: 
-                 @Html.TextBoxFor(x => x.Title, new { style = "width:280px", @readonly = "readonly" })
-             </p>
-             <p>Project administrator
-                 @Html.TextBoxFor(x => x.Admin, new{@readonly = "readonly"})
-             </p>
-             <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px", @readonly = "readonly" })</p>
-             <p>Est.finish date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:230px", @readonly = "readonly" })</p>
-             <p>Comments:</p>
-             <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px", @readonly = "readonly" })</p>
-             <input type ="submit" value ="Create new project" />    
-         }
+        if (Model.AllowEdit)
+        {
+            <p>Allias: 
+                @Html.TextBoxFor(x => x.Title, new { style = "width:280px" })
+            </p>
+            <p>Project administrator
+                @Html.DropDownListFor(m => m.Admin, new SelectList(Model.ListForProjectAdmin, "id", "Allias", Model.ListForProjectAdmin.First().id))
+            </p>
+            <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px" })</p>
+            <p>Est.finish date: @Html.TextBoxFor(x => x.EstFinishDate, new { style = "width:230px" })</p>
+            <p>Comments:</p>
+            <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px" })</p>
+            <input type ="submit" value ="Create new project" />
+        }
+        else
+        {
+            <p>Allias: 
+                @Html.TextBoxFor(x => x.Title, new { style = "width:280px", @readonly = "readonly" })
+            </p>
+            <p>Project administrator
+                @Html.TextBoxFor(x => x.Admin, new { @readonly = "readonly" })
+            </p>
+            <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px", @readonly = "readonly" })</p>
+            <p>Est.finish date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:230px", @readonly = "readonly" })</p>
+            <p>Comments:</p>
+            <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px", @readonly = "readonly" })</p>
+            <input type ="submit" value ="Save project" />
+        }
     }
 </div>
 
@@ -56,27 +57,31 @@
 						
         <tbody>
             
-                @foreach (var schedulingstatus in Model.SchedulingStatusList.SchedulingStatusDbList)
+            @foreach (SchedulingStatusViewList schedulingstatus in Model.SchedulingStatusList.SchedulingStatusDbList)
+            {
+                @:<tr>
+                @:<td>@schedulingstatus.Allias</td>
+                @:<td>@schedulingstatus.Type</td>
+                @:<td>@schedulingstatus.DayOfWeek</td>
+                @:<td>@schedulingstatus.DayOfMonth</td>
+                @:<td>@schedulingstatus.ScheduledTime</td>
+                @:<td>
+                if (Model.AllowEdit)
                 {
-                    @:<tr>
-                        @:<td>@schedulingstatus.Allias</td>
-                        @:<td>@schedulingstatus.Type</td>
-                        @:<td>@schedulingstatus.DayOfWeek</td>
-                        @:<td>@schedulingstatus.DayOfMonth</td>
-                        @:<td>@schedulingstatus.ScheduledTime</td>
-                        @:<td>
-                    if (Model.AllowEdit == true)
-                    {
-                        @:<a href="#" class="table-icon edit" title="Edit"></a>
-                        @:<a href="#" class="table-icon delete" title="Delete"></a>
-                    }
-                    @:</td>
-                    @:</tr>
+                    @:<a href="#" class="table-icon edit" title="Edit"></a>
+                    @:<a href="#" class="table-icon delete" title="Delete"></a>
                 }
+
+                @:</td>
+                @:</tr>
+            }
            
         </tbody>
     </table>
-    @if (Model.AllowEdit){<button type="submit" class="add">@Html.ActionLink("Create new scheduling status", "ActionWithScheduledStatus", "Home", new {id="new", action = "create"}, null)</button>}
+    @if (Model.AllowEdit)
+    {
+        <button type="submit" class="add">@Html.ActionLink("Create new scheduling status", "ActionWithScheduledStatus", "Home", new { id = "new", action = "create" }, null)</button>
+    }
 </div>
 
 <div class="full_w">
@@ -92,20 +97,20 @@
         </thead>
 						
         <tbody>
-            @foreach (var userslist in Model.UsersListForProject.UsersDbListForProject)
+            @foreach (UsersViewListForProject userslist in Model.UsersListForProject.UsersDbListForProject)
             {
                 <tr>
                     <td class="align-center">@userslist.Allias</td>
                     <td>@userslist.ADusername</td>
                     <td>@userslist.Email</td>
                     <td>
-                        @if (Model.AllowEdit == true)
+                        @if (Model.AllowEdit)
                         {
-                            @Html.DropDownListFor(x => x.ProjectMembers, new[] { new SelectListItem() { Text = "Project admin", Value = bool.TrueString }, new SelectListItem() { Text = "Project member", Value = bool.FalseString } }, "-")
+                            @Html.DropDownListFor(x => x.ProjectMembers, new[] { new SelectListItem { Text = "Project admin", Value = bool.TrueString }, new SelectListItem { Text = "Project member", Value = bool.FalseString } }, "-")
                         }
                         else
                         {
-                            @Html.TextBoxFor(x => x.ProjectMembers);
+                            //@Html.TextBoxFor(x => x.ProjectMembers)
                         }
                     </td>
                 </tr>
@@ -115,7 +120,7 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $.datepicker.regional['ru'] = {
             closeText: 'Закрыть',
             prevText: '<Пред',
@@ -152,14 +157,21 @@
         $.timepicker.setDefaults($.timepicker.regional['ru']);
         $("form").validate({
             errorLabelContainer: "#errdv",
-            rules: { Id: { required: true, maxlength: 3 }, NewPrice: { required: true} },
-            messages: { Id: { required: "Поле обязательно для заполнения.",
-                maxlength: "Длина не более 3 символов."} }
+            rules: { Id: { required: true, maxlength: 3 }, NewPrice: { required: true } },
+            messages: {
+                Id: {
+                    required: "Поле обязательно для заполнения.",
+                    maxlength: "Длина не более 3 символов."
+                }
+            }
         });
     });
 </script>
 
-<script type="text/javascript">
-    $("input[name='StartDate']").datetimepicker();
-    $("input[name='EstFinishDate']").datetimepicker();
-</script>
+@if (Model.AllowEdit)
+{
+    <script type="text/javascript">
+        $("input[name='StartDate']").datetimepicker();
+        $("input[name='EstFinishDate']").datetimepicker();
+    </script>
+}
