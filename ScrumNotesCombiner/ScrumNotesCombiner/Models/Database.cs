@@ -127,6 +127,20 @@ namespace ScrumNotesCombiner.Models
             var p1 = new ProjectsList(p2);
             return p1;
         }
+        
+        public NewProject GetProjectInfo(int projectId)
+        {
+            var SelectionContext = 
+               new DataClasses1DataContext(
+                   ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+            NewProject project = new NewProject();
+            var selectproject = from p in SelectionContext.projects select p;
+            project.Title = selectproject.FirstOrDefault().Allias;
+            project.StartDate = selectproject.FirstOrDefault().StartDate.ToString();
+            project.EstFinishDate = selectproject.FirstOrDefault().EstFinishDate.ToString();
+            project.Comments = selectproject.FirstOrDefault().Comments;
+            return project;
+        }
 
         public bool DeleteProject(int project_id)
         {

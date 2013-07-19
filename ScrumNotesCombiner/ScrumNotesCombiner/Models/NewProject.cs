@@ -36,6 +36,13 @@ namespace ScrumNotesCombiner.Models
             
         }
 
+        public void SetExtraParams(bool create, List<user> userlist, string currentaction, SchedulingStatusList ssl, UsersListForProject ulfp)
+        {
+            if (create == false) { ListForProjectAdmin = userlist; }
+            SchedulingStatusList = ssl;
+            action = currentaction;
+            UsersListForProject = ulfp;
+        }
         public NewProject(bool create, List<user> userlist, string currentaction, SchedulingStatusList ssl, UsersListForProject ulfp)
         {
             if (create==false){ListForProjectAdmin = userlist;}
