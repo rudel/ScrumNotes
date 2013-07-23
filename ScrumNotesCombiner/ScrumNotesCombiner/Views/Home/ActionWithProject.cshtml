@@ -117,6 +117,10 @@
             }
         </tbody>
     </table>
+    @if (Model.AllowEdit)
+    {
+        <button type="submit" class="add">@Html.ActionLink("Add new user to project", "ActionWithScheduledStatus", "Home", new { id = "new", action = "create" }, null)</button>
+    }
 </div>
 
 <script type="text/javascript">

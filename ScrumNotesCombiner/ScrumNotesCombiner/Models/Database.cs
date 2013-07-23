@@ -27,8 +27,10 @@ namespace ScrumNotesCombiner.Models
         /// <returns>
         /// The <see cref="List"/>.
         /// </returns>
-        public List<user> GetUsers()
+//Project-Related
+        public List<user> GetUsersInProject(int id)
         {
+            //TODO: ! ! !
             // Fetching users for Project Administrator listbox
             var SelectionContext =
                 new DataClasses1DataContext(
@@ -37,7 +39,6 @@ namespace ScrumNotesCombiner.Models
             List<user> userlist = SelectionContext.users.ToList();
             return userlist;
         }
-
         public SchedulingStatusList GetSchedulingStatuses(int project_id)
         {
             var SelectionContext =
@@ -77,6 +78,7 @@ namespace ScrumNotesCombiner.Models
                 ulfp1 = (from u in SelectionContext.users
                          join r in SelectionContext.roles on u.id equals r.UserId into ids
                          from x in ids.DefaultIfEmpty()
+                         where x.ProjectId.Equals(project_id)
                          select
                              new UsersViewListForProject
                                  {
@@ -192,6 +194,133 @@ namespace ScrumNotesCombiner.Models
                 return 1;
             }
         }
+
+        public bool ModifyProject(NewProject project)
+        {
+            try
+            {
+                int id = project.id;
+                var ProjectUpdateContext =
+                    new DataClasses1DataContext(
+                        ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+                var projectrecord = (from p in ProjectUpdateContext.projects where p.id.Equals(id) select p).Single();
+                project.ParsedStartDate = DateTime.Parse(project.StartDate);
+                project.ParsedEstFinishDate = DateTime.Parse(project.EstFinishDate);
+                projectrecord.Allias = project.Title;
+                projectrecord.Comments = project.Comments;
+                projectrecord.EstFinishDate = project.ParsedEstFinishDate;
+                projectrecord.ProjectAdminId = project.Admin;
+                projectrecord.StartDate = project.ParsedStartDate;
+                ProjectUpdateContext.SubmitChanges();
+                return false;
+            }
+            catch (Exception e)
+            {
+                return true;
+            }
+            
+
+    }
+//User-related
+        public UsersList GetUsersList()
+        {
+            // Fetching users for Project Administrator listbox
+            var SelectionContext =
+                new DataClasses1DataContext(
+                    ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+            UsersList userslist = new UsersList();
+            List<User> p2 = (from p in SelectionContext.users select new User{ADusername = p.ADusername, Allias = p.Allias, Email = p.email, Id = p.id, Role = ""}).ToList();
+            UsersList p1 = new UsersList();
+            p1.UsersViewList = p2;
+            return p1;
+        }
+        
+        public int CreateUser(NewUser user)
+        {
+            var UserCreateContext = new DataClasses1DataContext(
+                   ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+            int? count = 0;
+            UserCreateContext.check_user_existance(user.ADname, ref count);
+            try
+            {
+                if (count != 0)
+                {
+                    return 2;
+                }
+                int newid = UserCreateContext.users.Count() + 1;
+                var record = new user
+                                 {
+                                     id = newid,
+                                     ADusername = user.ADname,
+                                     Allias = user.Name,
+                                     email = user.Email,
+                                     comments = user.Comments
+                                 };
+                UserCreateContext.users.InsertOnSubmit(record);
+                UserCreateContext.users.Context.SubmitChanges();
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 1;
+            }
+        }
+
+        public bool delete_user(int user_id)
+        {
+            try
+            {
+                var UserDeleteContext = new DataClasses1DataContext(
+                   ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+                UserDeleteContext.delete_user(user_id);
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+        }
+
+        public NewUser GetUserInfo(int user_id)
+        {
+            var SelectionContext =
+               new DataClasses1DataContext(
+                   ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+            NewUser user = new NewUser();
+            var selectuser = from u in SelectionContext.users where u.id.Equals(user_id) select u;
+            user.Name = selectuser.FirstOrDefault().Allias;
+            user.ADname = selectuser.FirstOrDefault().ADusername;
+            user.IsSCRUMadmin = selectuser.FirstOrDefault().scrumadmin;
+            user.Email = selectuser.FirstOrDefault().email;
+            user.Comments = selectuser.FirstOrDefault().comments;
+            return user;
+        }
+
+        public bool ModifyUser(NewUser user)
+        {
+            try
+            {
+                var UserUpdateContext =
+                   new DataClasses1DataContext(
+                       ConfigurationManager.ConnectionStrings["ScrumNotesCombinerConnectionString"].ConnectionString);
+                var userrecord = (from u in UserUpdateContext.users where u.id.Equals(user.id) select u).Single();
+                userrecord.Allias = user.Name;
+                userrecord.ADusername = user.ADname;
+                userrecord.comments = user.Comments;
+                userrecord.email = user.Email;
+                userrecord.scrumadmin = user.IsSCRUMadmin;
+                UserUpdateContext.SubmitChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+        }
+
+        
         #endregion
     }
 }

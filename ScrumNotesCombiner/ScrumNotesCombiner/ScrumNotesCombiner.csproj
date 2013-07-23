@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -148,6 +151,7 @@
     <Compile Include="Models\SchedulingStatusList.cs" />
     <Compile Include="Models\ScrumTemplates.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\UsersList.cs" />
     <Compile Include="Models\UsersListForProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

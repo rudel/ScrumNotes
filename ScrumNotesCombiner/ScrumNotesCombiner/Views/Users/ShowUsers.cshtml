@@ -1,4 +1,6 @@
-﻿@{
+﻿@using ScrumNotesCombiner.App_Code.Helpers
+@model ScrumNotesCombiner.Models.UsersList
+@{
     ViewBag.Title = "ShowUsers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,17 +19,22 @@
         </thead>
 						
         <tbody>
-            <tr>
-                <td class="align-center">Aleksander Aleksinskiy</td>
-                <td>alex.aleksinskiy</td>
-                <td>SCRUM admin, project admin(3)</td>
-                <td>alex.aleksinskiy@akvelon.com</td>
-                <td>
-                    <a href="#" class="table-icon edit" title="Edit"></a>
-                    <a href="#" class="table-icon delete" title="Delete"></a>
-                </td>
-            </tr>
+        @foreach (var user in Model.UsersViewList)
+        {
+            @:<tr>
+
+                @:<td>@Html.ActionLink(user.Allias, "ActionWithUser", "Users", new {id = user.Id, Useraction = "View"}, null)</td>
+                @:<td>@user.ADusername</td>
+                @:<td>@user.Role</td>
+                @:<td>@user.Email</td>
+                @:<td>
+                    @Html.ActionImage("ActionWithUser", "Users", new { id = user.Id, UserAction = "Edit" }, "~/img/i_edit.png", "Edit", false)
+                    @:&nbsp;
+                    @Html.ActionImage("ActionWithUser", "Users", new { id = user.Id, UserAction = "Delete" }, "~/img/i_delete.png", "Delete",true)
+                @:</td>
+            @:</tr>
+        }
         </tbody>
     </table>
-    <button type="submit" class="add"> @Html.ActionLink("Create new user", "ActionWithUser", "Users", new {id="new", action = "create"})</button>
+    <button type="submit" class="add"> @Html.ActionLink("Create new user", "ActionWithUser", "Users", new {id = 0, UserAction = "Create"}, null)</button>
 </div>

@@ -33,21 +33,21 @@ namespace ScrumNotesCombiner.Models
     partial void Insertproject(project instance);
     partial void Updateproject(project instance);
     partial void Deleteproject(project instance);
-    partial void Insertrole(role instance);
-    partial void Updaterole(role instance);
-    partial void Deleterole(role instance);
     partial void InsertScheduleStatus(ScheduleStatus instance);
     partial void UpdateScheduleStatus(ScheduleStatus instance);
     partial void DeleteScheduleStatus(ScheduleStatus instance);
     partial void InsertScrumNotesTemplate(ScrumNotesTemplate instance);
     partial void UpdateScrumNotesTemplate(ScrumNotesTemplate instance);
     partial void DeleteScrumNotesTemplate(ScrumNotesTemplate instance);
-    partial void Insertuser(user instance);
-    partial void Updateuser(user instance);
-    partial void Deleteuser(user instance);
     partial void InsertUserStatuse(UserStatuse instance);
     partial void UpdateUserStatuse(UserStatuse instance);
     partial void DeleteUserStatuse(UserStatuse instance);
+    partial void Insertuser(user instance);
+    partial void Updateuser(user instance);
+    partial void Deleteuser(user instance);
+    partial void Insertrole(role instance);
+    partial void Updaterole(role instance);
+    partial void Deleterole(role instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -88,14 +88,6 @@ namespace ScrumNotesCombiner.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<role> roles
-		{
-			get
-			{
-				return this.GetTable<role>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ScheduleStatus> ScheduleStatus
 		{
 			get
@@ -112,6 +104,14 @@ namespace ScrumNotesCombiner.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<UserStatuse> UserStatuses
+		{
+			get
+			{
+				return this.GetTable<UserStatuse>();
+			}
+		}
+		
 		public System.Data.Linq.Table<user> users
 		{
 			get
@@ -120,11 +120,11 @@ namespace ScrumNotesCombiner.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<UserStatuse> UserStatuses
+		public System.Data.Linq.Table<role> roles
 		{
 			get
 			{
-				return this.GetTable<UserStatuse>();
+				return this.GetTable<role>();
 			}
 		}
 		
@@ -141,13 +141,6 @@ namespace ScrumNotesCombiner.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId, projectID, count);
 			count = ((System.Nullable<int>)(result.GetParameterValue(2)));
 			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.check_user_existance")]
-		public ISingleResult<check_user_existanceResult> check_user_existance([global::System.Data.Linq.Mapping.ParameterAttribute(Name="AdName", DbType="VarChar(MAX)")] string adName)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), adName);
-			return ((ISingleResult<check_user_existanceResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.delete_project")]
@@ -169,6 +162,21 @@ namespace ScrumNotesCombiner.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), allias, count);
 			count = ((System.Nullable<int>)(result.GetParameterValue(1)));
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.check_user_existance")]
+		public int check_user_existance([global::System.Data.Linq.Mapping.ParameterAttribute(Name="AdName", DbType="VarChar(MAX)")] string adName, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] ref System.Nullable<int> count)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), adName, count);
+			count = ((System.Nullable<int>)(result.GetParameterValue(1)));
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.delete_user")]
+		public int delete_user([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> user_id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), user_id);
 			return ((int)(result.ReturnValue));
 		}
 	}
@@ -330,164 +338,6 @@ namespace ScrumNotesCombiner.Models
 					this._Comments = value;
 					this.SendPropertyChanged("Comments");
 					this.OnCommentsChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.roles")]
-	public partial class role : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _Name;
-		
-		private System.Nullable<bool> _ScrumAdmin;
-		
-		private System.Nullable<int> _ProjectId;
-		
-		private System.Nullable<int> _UserId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnScrumAdminChanging(System.Nullable<bool> value);
-    partial void OnScrumAdminChanged();
-    partial void OnProjectIdChanging(System.Nullable<int> value);
-    partial void OnProjectIdChanged();
-    partial void OnUserIdChanging(System.Nullable<int> value);
-    partial void OnUserIdChanged();
-    #endregion
-		
-		public role()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ScrumAdmin", DbType="Bit")]
-		public System.Nullable<bool> ScrumAdmin
-		{
-			get
-			{
-				return this._ScrumAdmin;
-			}
-			set
-			{
-				if ((this._ScrumAdmin != value))
-				{
-					this.OnScrumAdminChanging(value);
-					this.SendPropertyChanging();
-					this._ScrumAdmin = value;
-					this.SendPropertyChanged("ScrumAdmin");
-					this.OnScrumAdminChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="Int")]
-		public System.Nullable<int> ProjectId
-		{
-			get
-			{
-				return this._ProjectId;
-			}
-			set
-			{
-				if ((this._ProjectId != value))
-				{
-					this.OnProjectIdChanging(value);
-					this.SendPropertyChanging();
-					this._ProjectId = value;
-					this.SendPropertyChanged("ProjectId");
-					this.OnProjectIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int")]
-		public System.Nullable<int> UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
 				}
 			}
 		}
@@ -925,164 +775,6 @@ namespace ScrumNotesCombiner.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.users")]
-	public partial class user : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _Allias;
-		
-		private string _ADusername;
-		
-		private string _email;
-		
-		private string _comments;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnAlliasChanging(string value);
-    partial void OnAlliasChanged();
-    partial void OnADusernameChanging(string value);
-    partial void OnADusernameChanged();
-    partial void OnemailChanging(string value);
-    partial void OnemailChanged();
-    partial void OncommentsChanging(string value);
-    partial void OncommentsChanged();
-    #endregion
-		
-		public user()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Allias", DbType="VarChar(MAX)")]
-		public string Allias
-		{
-			get
-			{
-				return this._Allias;
-			}
-			set
-			{
-				if ((this._Allias != value))
-				{
-					this.OnAlliasChanging(value);
-					this.SendPropertyChanging();
-					this._Allias = value;
-					this.SendPropertyChanged("Allias");
-					this.OnAlliasChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ADusername", DbType="VarChar(MAX)")]
-		public string ADusername
-		{
-			get
-			{
-				return this._ADusername;
-			}
-			set
-			{
-				if ((this._ADusername != value))
-				{
-					this.OnADusernameChanging(value);
-					this.SendPropertyChanging();
-					this._ADusername = value;
-					this.SendPropertyChanged("ADusername");
-					this.OnADusernameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(MAX)")]
-		public string email
-		{
-			get
-			{
-				return this._email;
-			}
-			set
-			{
-				if ((this._email != value))
-				{
-					this.OnemailChanging(value);
-					this.SendPropertyChanging();
-					this._email = value;
-					this.SendPropertyChanged("email");
-					this.OnemailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comments", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string comments
-		{
-			get
-			{
-				return this._comments;
-			}
-			set
-			{
-				if ((this._comments != value))
-				{
-					this.OncommentsChanging(value);
-					this.SendPropertyChanging();
-					this._comments = value;
-					this.SendPropertyChanged("comments");
-					this.OncommentsChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserStatuses")]
 	public partial class UserStatuse : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1289,38 +981,328 @@ namespace ScrumNotesCombiner.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.users")]
+	public partial class user : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _Allias;
+		
+		private string _ADusername;
+		
+		private string _email;
+		
+		private string _comments;
+		
+		private System.Nullable<bool> _scrumadmin;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnAlliasChanging(string value);
+    partial void OnAlliasChanged();
+    partial void OnADusernameChanging(string value);
+    partial void OnADusernameChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OncommentsChanging(string value);
+    partial void OncommentsChanged();
+    partial void OnscrumadminChanging(System.Nullable<bool> value);
+    partial void OnscrumadminChanged();
+    #endregion
+		
+		public user()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Allias", DbType="VarChar(MAX)")]
+		public string Allias
+		{
+			get
+			{
+				return this._Allias;
+			}
+			set
+			{
+				if ((this._Allias != value))
+				{
+					this.OnAlliasChanging(value);
+					this.SendPropertyChanging();
+					this._Allias = value;
+					this.SendPropertyChanged("Allias");
+					this.OnAlliasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ADusername", DbType="VarChar(MAX)")]
+		public string ADusername
+		{
+			get
+			{
+				return this._ADusername;
+			}
+			set
+			{
+				if ((this._ADusername != value))
+				{
+					this.OnADusernameChanging(value);
+					this.SendPropertyChanging();
+					this._ADusername = value;
+					this.SendPropertyChanged("ADusername");
+					this.OnADusernameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(MAX)")]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comments", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string comments
+		{
+			get
+			{
+				return this._comments;
+			}
+			set
+			{
+				if ((this._comments != value))
+				{
+					this.OncommentsChanging(value);
+					this.SendPropertyChanging();
+					this._comments = value;
+					this.SendPropertyChanged("comments");
+					this.OncommentsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_scrumadmin", DbType="Bit")]
+		public System.Nullable<bool> scrumadmin
+		{
+			get
+			{
+				return this._scrumadmin;
+			}
+			set
+			{
+				if ((this._scrumadmin != value))
+				{
+					this.OnscrumadminChanging(value);
+					this.SendPropertyChanging();
+					this._scrumadmin = value;
+					this.SendPropertyChanged("scrumadmin");
+					this.OnscrumadminChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.roles")]
+	public partial class role : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private System.Nullable<int> _ProjectId;
+		
+		private System.Nullable<int> _UserId;
+		
+		private string _Name;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnProjectIdChanging(System.Nullable<int> value);
+    partial void OnProjectIdChanged();
+    partial void OnUserIdChanging(System.Nullable<int> value);
+    partial void OnUserIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public role()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="Int")]
+		public System.Nullable<int> ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this.OnProjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._ProjectId = value;
+					this.SendPropertyChanged("ProjectId");
+					this.OnProjectIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int")]
+		public System.Nullable<int> UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	public partial class check_role_existanceResult
 	{
 		
 		private System.Nullable<int> _Column1;
 		
 		public check_role_existanceResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Int")]
-		public System.Nullable<int> Column1
-		{
-			get
-			{
-				return this._Column1;
-			}
-			set
-			{
-				if ((this._Column1 != value))
-				{
-					this._Column1 = value;
-				}
-			}
-		}
-	}
-	
-	public partial class check_user_existanceResult
-	{
-		
-		private System.Nullable<int> _Column1;
-		
-		public check_user_existanceResult()
 		{
 		}
 		

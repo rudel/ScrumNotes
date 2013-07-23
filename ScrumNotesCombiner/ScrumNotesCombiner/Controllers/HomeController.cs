@@ -37,7 +37,7 @@ namespace ScrumNotesCombiner.Controllers
         public ActionResult ActionWithProject(int id, string ProjectAction)
         {
             var ScrumNotesDatabase = new Database();
-            List<user> userlist = ScrumNotesDatabase.GetUsers();
+            List<user> userlist = ScrumNotesDatabase.GetUsersInProject(id);
             SchedulingStatusList ssl = ScrumNotesDatabase.GetSchedulingStatuses(id);
             UsersListForProject ulfp = ScrumNotesDatabase.GetUsersForProjectRoles(id);
             var nproject = new NewProject(false, userlist, ProjectAction, ssl, ulfp);
@@ -58,6 +58,7 @@ namespace ScrumNotesCombiner.Controllers
                     nproject = ScrumNotesDatabase.GetProjectInfo(id);
                     nproject.SetExtraParams(false, userlist, ProjectAction, ssl, ulfp);
                     nproject.AllowEdit = true;
+                    nproject.id = id;
                     return View(nproject);
                     break;
                 case "Delete":
@@ -89,7 +90,8 @@ namespace ScrumNotesCombiner.Controllers
                     return this.View(newproject);
                     break;
                 case "Edit":
-                    return this.View(newproject);
+                    ScrumNotesDatabase.ModifyProject(newproject);
+                    return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }
@@ -120,8 +122,7 @@ namespace ScrumNotesCombiner.Controllers
             ///     The <see cref="ActionResult" />.
             /// </returns>
         public
-            ActionResult Index 
-            ()
+            ActionResult Index ()
             {
                 var ScrumNotesDatabase = new Database();
                 ProjectsList projects = ScrumNotesDatabase.GetProjectsList();

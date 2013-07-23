@@ -10,6 +10,7 @@ namespace ScrumNotesCombiner.Models
     public class NewProject
     {
         //Properties for new project (HTTPPOST)
+        public int id { get; set;}
         [Required(ErrorMessage = "Title not specified")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Project administrator not specified !")]
@@ -30,6 +31,8 @@ namespace ScrumNotesCombiner.Models
         //Controls enable/disable
         public bool AllowEdit { get; set; }
         public string ProjectAction { get; set; } //"Create", "Edit", "View"
+        //User role for project
+        public List<RolesInProject> RolesInProjectList { get; set; }
 
         public NewProject()
         {
@@ -50,5 +53,10 @@ namespace ScrumNotesCombiner.Models
             action = currentaction;
             UsersListForProject = ulfp;
         }
+    }
+    public class RolesInProject
+    {
+        public int UserId { get; set; }
+        public string Role { get; set; }
     }
 }

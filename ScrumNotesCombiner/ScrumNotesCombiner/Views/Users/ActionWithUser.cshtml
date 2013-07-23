@@ -9,6 +9,7 @@
     @using (Html.BeginForm()) 
     {
         @Html.ValidationSummary()
+        @Html.HiddenFor(x => x.id)
         <p>Allias: @Html.TextBoxFor(x=>x.Name, new { style = "width:280px"})</p>
         <p>AD user name: @Html.TextBoxFor(x=>x.ADname, new { style = "width:237px"})</p>
         <p>Email: @Html.TextBoxFor(x=>x.Email, new { style = "width:280px"})</p>

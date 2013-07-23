@@ -63,12 +63,13 @@
         </p>
         <p>@Html.TextAreaFor(x=>x.emails, new { style = "width:310px; height:100px"})</p>
         <p>Scheduled time: @Html.TextBoxFor(x=>x.Allias, new { style = "width:100px"})</p>
-        <p><input type ="submit" value ="Create new Scheduled status" /></p><p><input type ="submit" value ="Preview Scheduled Status" /></p><p><input type ="submit" value ="Manual send Scheduled Status" /></p>
+        <p><input type ="submit" value ="Preview Scheduled Status" /></p><p><input type ="submit" value ="Manual send Scheduled Status" /></p>
         <p>SCRUM template
             @Html.DropDownListFor(x=>x.Type, new[] {
-                new SelectListItem() {Text = "SCRUM Notes Combiner development: default", Value = "SCRUM Notes Combiner development: default"},
-                new SelectListItem() {Text = "Public actions management system: non-formal", Value = "Public actions management system: non-formal"},
-            }, "-")
+                                                       new SelectListItem() {Text = "SCRUM Notes Combiner development: default", Value = "SCRUM Notes Combiner development: default"},
+                                                       new SelectListItem() {Text = "Public actions management system: non-formal", Value = "Public actions management system: non-formal"},
+                                                   }, "-")
         </p>
+        <input type ="submit" value ="Save scheduling status" />
     }
 </div>

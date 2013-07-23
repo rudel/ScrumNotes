@@ -10,15 +10,6 @@
       <Column Name="Comments" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
     </Type>
   </Table>
-  <Table Name="dbo.roles" Member="roles">
-    <Type Name="role">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="ScrumAdmin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ProjectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.ScheduleStatus" Member="ScheduleStatus">
     <Type Name="ScheduleStatus">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -41,15 +32,6 @@
       <Column Name="markup" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
     </Type>
   </Table>
-  <Table Name="dbo.users" Member="users">
-    <Type Name="user">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Allias" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="ADusername" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="email" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="comments" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
   <Table Name="dbo.UserStatuses" Member="UserStatuses">
     <Type Name="UserStatuse">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -59,6 +41,24 @@
       <Column Name="Period1" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Period2" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Blockers" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Allias" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ADusername" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="comments" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="scrumadmin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.roles" Member="roles">
+    <Type Name="role">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProjectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.check_role_existance" Method="check_role_existance">
@@ -75,12 +75,6 @@
     <Parameter Name="count" Type="System.Int32" DbType="Int" Direction="InOut" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.check_user_existance" Method="check_user_existance">
-    <Parameter Name="AdName" Parameter="adName" Type="System.String" DbType="VarChar(MAX)" />
-    <ElementType Name="check_user_existanceResult">
-      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.delete_project" Method="delete_project">
     <Parameter Name="project_id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
@@ -92,6 +86,15 @@
   <Function Name="dbo.check_project_existance" Method="check_project_existance">
     <Parameter Name="allias" Type="System.String" DbType="VarChar(MAX)" />
     <Parameter Name="count" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.check_user_existance" Method="check_user_existance">
+    <Parameter Name="AdName" Parameter="adName" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="count" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.delete_user" Method="delete_user">
+    <Parameter Name="user_id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
 </Database>
