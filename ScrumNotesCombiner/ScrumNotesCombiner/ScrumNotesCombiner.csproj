@@ -138,17 +138,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database.cs" />
-    <Compile Include="Models\DataClasses1.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataClasses1.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\NewProject.cs" />
     <Compile Include="Models\NewScheduleStatus.cs" />
     <Compile Include="Models\NewStatus.cs" />
     <Compile Include="Models\NewUser.cs" />
     <Compile Include="Models\ProjectsList.cs" />
     <Compile Include="Models\SchedulingStatusList.cs" />
+    <Compile Include="Models\ScrumNotesDbClass.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScrumNotesDbClass.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ScrumTemplates.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\UsersList.cs" />
@@ -237,9 +237,9 @@
     <Content Include="img\i_users.png" />
     <Content Include="img\i_view_page.png" />
     <Content Include="img\i_warning.png" />
-    <Content Include="Models\DataClasses1.dbml">
+    <Content Include="Models\ScrumNotesDbClass.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <LastGenOutput>ScrumNotesDbClass.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
@@ -313,8 +313,8 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\DataClasses1.dbml.layout">
-      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    <None Include="Models\ScrumNotesDbClass.dbml.layout">
+      <DependentUpon>ScrumNotesDbClass.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <PropertyGroup>

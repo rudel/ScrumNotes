@@ -8,16 +8,27 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace ScrumNotesCombiner.Controllers
 {
-    using System.Collections.Generic;
+    using System.Reflection;
     using System.Web.Mvc;
+
+    using log4net;
 
     using ScrumNotesCombiner.Models;
 
     /// <summary>
-    ///     The home controller.
+    /// The home controller.
     /// </summary>
     public class HomeController : Controller
     {
+        #region Static Fields
+
+        /// <summary>
+        /// The _logger.
+        /// </summary>
+        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        #endregion
+
         // Homepage
         #region Public Methods and Operators
 
@@ -28,7 +39,7 @@ namespace ScrumNotesCombiner.Controllers
         /// The id.
         /// </param>
         /// <param name="ProjectAction">
-        /// The Project Action.
+        /// The project action.
         /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
@@ -37,9 +48,10 @@ namespace ScrumNotesCombiner.Controllers
         public ActionResult ActionWithProject(int id, string ProjectAction)
         {
             var ScrumNotesDatabase = new Database();
-            List<user> userlist = ScrumNotesDatabase.GetUsersInProject(id);
+            UsersList userlist = ScrumNotesDatabase.GetUsersInProject(id);
             SchedulingStatusList ssl = ScrumNotesDatabase.GetSchedulingStatuses(id);
             UsersListForProject ulfp = ScrumNotesDatabase.GetUsersForProjectRoles(id);
+            _logger.Debug("Performing actions with project");
             var nproject = new NewProject(false, userlist, ProjectAction, ssl, ulfp);
             switch (ProjectAction)
             {
@@ -63,9 +75,10 @@ namespace ScrumNotesCombiner.Controllers
                     break;
                 case "Delete":
                     ScrumNotesDatabase.DeleteProject(id);
-                    return RedirectToAction("Index");
+                    return this.RedirectToAction("Index");
                     break;
             }
+
             return this.View();
         }
 
@@ -88,49 +101,47 @@ namespace ScrumNotesCombiner.Controllers
                     ScrumNotesDatabase.CreateProject(newproject);
                     this.RedirectToAction("Index");
                     return this.View(newproject);
+
                     break;
                 case "Edit":
                     ScrumNotesDatabase.ModifyProject(newproject);
-                    return RedirectToAction("Index");
+                    return this.RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+
+            return this.RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// The action with scheduled status.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="action">
+        /// The action.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult ActionWithScheduledStatus(string id, string action)
+        {
+            return this.View();
         }
 
         // <summary>
-                /// The action with scheduled status.
-                /// </summary>
-                /// <param name="id">
-                /// The id.
-                /// </param>
-                /// <param name="action">
-                /// The action.
-                /// </param>
-                /// <returns>
-                /// The <see cref="ActionResult"/>.
-                /// </returns>
-            public
-            ActionResult ActionWithScheduledStatus 
-            (string id, string action)
-            {
-                return this.View();
-            }
-
-            // <summary>
-            ///     The index.
-            /// </summary>
-            /// <returns>
-            ///     The <see cref="ActionResult" />.
-            /// </returns>
-        public
-            ActionResult Index ()
-            {
-                var ScrumNotesDatabase = new Database();
-                ProjectsList projects = ScrumNotesDatabase.GetProjectsList();
-                return this.View(projects);
-            }
-
-            #endregion
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Index()
+        {
+            var ScrumNotesDatabase = new Database();
+            ProjectsList projects = ScrumNotesDatabase.GetProjectsList();
+            return this.View(projects);
         }
 
-
+        #endregion
     }
+}

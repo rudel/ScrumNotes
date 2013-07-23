@@ -1,20 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SettingsController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The settings controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ScrumNotesCombiner.Controllers
 {
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// The settings controller.
+    /// </summary>
     public class SettingsController : Controller
     {
-        //
-        // GET: /Settings/
+        #region Public Methods and Operators
 
+        /// <summary>
+        /// The settings.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         public ActionResult Settings()
         {
-            return View();
+            return this.View();
         }
 
+        #endregion
     }
 }

@@ -1,0 +1,12 @@
+2013-07-23 12:13:37,409 [47] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 12:19:34,667 [43] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 12:31:26,228 [34] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:13:40,421 [386] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:15:09,265 [386] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:15:44,242 [383] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:15:48,656 [383] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:15:52,384 [383] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:16:24,577 [386] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:17:36,017 [387] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:21:52,363 [393] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project
+2013-07-23 17:21:55,423 [392] DEBUG ScrumNotesCombiner.Controllers.HomeController - Performing actions with project

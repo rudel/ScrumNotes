@@ -1,21 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ScrumTemplatesController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The scrum templates controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ScrumNotesCombiner.Controllers
 {
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// The scrum templates controller.
+    /// </summary>
     public class ScrumTemplatesController : Controller
     {
-        //
-        // GET: /ScrumTemplates/
+        #region Public Methods and Operators
 
-        public ActionResult ScrumTemplates()
-        {
-            return View();
-        }
-
+        /// <summary>
+        /// The action with scrum template.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="action">
+        /// The action.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         public ActionResult ActionWithScrumTemplate(string id, string action)
         {
             switch (action)
@@ -29,8 +43,21 @@ namespace ScrumNotesCombiner.Controllers
                 case "remove":
                     break;
             }
-            return View();
+
+            return this.View();
         }
 
+        /// <summary>
+        /// The scrum templates.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult ScrumTemplates()
+        {
+            return this.View();
+        }
+
+        #endregion
     }
 }

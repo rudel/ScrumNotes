@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ScrumNotesCombiner" Class="ScrumNotesDbClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=O141;Initial Catalog=ScrumNotesCombiner;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ScrumNotesCombinerConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Project">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Allias" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectAdminId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EstFinishDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Project_Role" Member="Roles" ThisKey="Id" OtherKey="ProjectId" Type="Role" />
+      <Association Name="Project_ScheduleStatus" Member="ScheduleStatus" ThisKey="Id" OtherKey="ProjectId" Type="ScheduleStatus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProjectId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Project_Role" Member="Project" ThisKey="ProjectId" OtherKey="Id" Type="Project" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="User_Role" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ScheduleStatus" Member="ScheduleStatus">
+    <Type Name="ScheduleStatus">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Allias" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DayOfWeek" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DayOfMonth" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ScheduledTime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="Emails" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ScrumTemplateId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ScheduleStatus_ScrumNotesTemplate" Member="ScrumNotesTemplates" ThisKey="Id" OtherKey="SchedulingStatusId" Type="ScrumNotesTemplate" />
+      <Association Name="ScheduleStatus_UserStatuse" Member="UserStatuses" ThisKey="Id" OtherKey="ScheduleStatusId" Type="UserStatuse" />
+      <Association Name="Project_ScheduleStatus" Member="Project" ThisKey="ProjectId" OtherKey="Id" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ScrumNotesTemplates" Member="ScrumNotesTemplates">
+    <Type Name="ScrumNotesTemplate">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SchedulingStatusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Markup" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="ScheduleStatus_ScrumNotesTemplate" Member="ScheduleStatus" ThisKey="SchedulingStatusId" OtherKey="Id" Type="ScheduleStatus" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Allias" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ADUserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ScrumAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="User_Role" Member="Roles" ThisKey="Id" OtherKey="UserId" Type="Role" />
+      <Association Name="User_UserStatuse" Member="UserStatuse" ThisKey="Id" OtherKey="Id" Type="UserStatuse" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserStatuses" Member="UserStatuses">
+    <Type Name="UserStatuse">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ScheduleStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Period1" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Period2" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Blockers" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="ScheduleStatus_UserStatuse" Member="ScheduleStatus" ThisKey="ScheduleStatusId" OtherKey="Id" Type="ScheduleStatus" IsForeignKey="true" />
+      <Association Name="User_UserStatuse" Member="User" ThisKey="Id" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

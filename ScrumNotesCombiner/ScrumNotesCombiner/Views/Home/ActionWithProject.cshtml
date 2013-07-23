@@ -16,13 +16,13 @@
                 @Html.TextBoxFor(x => x.Title, new { style = "width:280px" })
             </p>
             <p>Project administrator
-                @Html.DropDownListFor(m => m.Admin, new SelectList(Model.ListForProjectAdmin, "id", "Allias", Model.ListForProjectAdmin.First().id))
+                @Html.DropDownListFor(m => m.Admin, new SelectList(Model.ListForProjectAdmin.UsersViewList, "Id", "Allias", Model.ListForProjectAdmin.UsersViewList.First().Id))
             </p>
             <p>Start date: @Html.TextBoxFor(x => x.StartDate, new { style = "width:250px" })</p>
             <p>Est.finish date: @Html.TextBoxFor(x => x.EstFinishDate, new { style = "width:230px" })</p>
             <p>Comments:</p>
             <p>@Html.TextAreaFor(x => x.Comments, new { style = "width:310px; height:100px" })</p>
-            <input type ="submit" value ="Create new project" />
+            <input type ="submit" value ="Save projet" />
         }
         else
         {

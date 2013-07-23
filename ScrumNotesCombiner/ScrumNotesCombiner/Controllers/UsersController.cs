@@ -1,28 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ScrumNotesCombiner.Models;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UsersController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The users controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ScrumNotesCombiner.Controllers
 {
+    using System.Web.Mvc;
+
+    using ScrumNotesCombiner.Models;
+
+    /// <summary>
+    /// The users controller.
+    /// </summary>
     public class UsersController : Controller
     {
-        //
-        // GET: /Users/
 
-        public ActionResult ShowUsers() //List of users here
-        {
-            var ScrumNotesDatabase = new Database();
-            UsersList userslist = ScrumNotesDatabase.GetUsersList();
-            return View(userslist);
-        }
+        #region Public Methods and Operators
 
+        /// <summary>
+        /// The action with user.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="UserAction">
+        /// The user action.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [HttpGet]
-        public ActionResult ActionWithUser(int id, string UserAction) //Performes actions with users
+        public ActionResult ActionWithUser(int id, string UserAction)
         {
-            NewUser nuser = new NewUser();
+            // Performes actions with users
+            var nuser = new NewUser();
             var ScrumNotesDatabase = new Database();
             nuser.UserAction = UserAction;
             switch (UserAction)
@@ -40,12 +55,22 @@ namespace ScrumNotesCombiner.Controllers
                     nuser.AllowEdit = true;
                     return this.View(nuser);
                 case "Delete":
-                    ScrumNotesDatabase.delete_user(id);
-                    return RedirectToAction("ShowUsers");
+                    ScrumNotesDatabase.DeleteUser(id);
+                    return this.RedirectToAction("ShowUsers");
             }
-            return View();
+
+            return this.View();
         }
-        
+
+        /// <summary>
+        /// The action with user.
+        /// </summary>
+        /// <param name="newUser">
+        /// The new user.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [HttpPost]
         public ActionResult ActionWithUser(NewUser newUser)
         {
@@ -54,12 +79,29 @@ namespace ScrumNotesCombiner.Controllers
             {
                 case "Create":
                     ScrumNotesDatabase.CreateUser(newUser);
-                    return RedirectToAction("ShowUsers");
+                    return this.RedirectToAction("ShowUsers");
                 case "Edit":
                     ScrumNotesDatabase.ModifyUser(newUser);
-                    return RedirectToAction("ShowUsers");
+                    return this.RedirectToAction("ShowUsers");
             }
+
             return this.View(newUser);
         }
+
+        /// <summary>
+        /// The show users.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult ShowUsers()
+        {
+            // List of users here
+            var ScrumNotesDatabase = new Database();
+            UsersList userslist = ScrumNotesDatabase.GetUsersList();
+            return View(userslist);
+        }
+
+        #endregion
     }
 }
